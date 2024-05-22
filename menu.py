@@ -147,17 +147,14 @@ while place_order:
                     print("-"*25)
 
                     # Add the item name, price, and quantity to the order list
-                    print("len(customer_order)")
-                    print(len(customer_order))
-                    if len(customer_order) > 0:
-                        for items in customer_order:
-                            print(items)
-                            if not item_name in items:
-                                customer_order.append({item_name:{
+                    if len(customer_order) > 0: # checks if customer order has one or more items
+                        for items in customer_order: # if it has one or more items, it takes items
+                            if not item_name in items: # checks if current item is in the items
+                                customer_order.append({item_name:{ # if item hasn't been added, it appends item to customer_order
                                     "Price": menu_items[item_number]["Price"],
                                     "Quantity": quantity
                                 }})
-                            else:
+                            else: # the item has already been added, so it only adds the quantity to the item amount
                                 items[item_name]["Quantity"] += quantity
                     else:
                         customer_order.append({item_name:{
@@ -166,9 +163,7 @@ while place_order:
                             "Quantity": quantity
                         }})
 
-                    print("customer_order")
-                    print(customer_order)
-                    # Tell the customer that their input isn't valid
+            # Tell the customer that their input isn't valid
             else:
                 print("Invalid input")
                 print(f"you must enter a number between  (1 - {i - 1})")
@@ -230,27 +225,33 @@ split_three_len = len(split_three)
 
 # 6. Loop through the items in the customer's order
 for item in customer_order:
+    # print(item)
     if type(item) is dict:
 
-    # 7. Store the dictionary items as variables
-        current_item = item["Item name"]
-        current_price = item["Price"]
-        current_quantity = item["Quantity"]
+        for key, value in item.items():
+            # print(key)
+            # print(value)
+            # print(value["Price"])
+            # print(value["Quantity"])
 
-    # 8. Calculate the number of spaces for formatted printing
-    spacing_one_len = split_one_len - len(current_item)
-    spacing_two_len = split_two_len - len(str(current_price))
-    spacing_three_len = split_three_len - len(str(current_quantity))
+        # 7. Store the dictionary items as variables
+            current_item = key
+            current_price = value["Price"]
+            current_quantity = value["Quantity"]
+
+            # 8. Calculate the number of spaces for formatted printing
+            spacing_one_len = split_one_len - len(current_item)
+            spacing_two_len = split_two_len - (len(str(current_price)) +1) # minus 1 to account for dollar
+            spacing_three_len = split_three_len - (len(str(current_quantity)))
+
+            # 9. Create space strings
+            space_one = spacing_one_len * " "
+            space_two = spacing_two_len * " "
+            space_three = int(spacing_three_len/2) * " "
 
 
-    # 9. Create space strings
-    space_one = spacing_one_len * " "
-    space_two = spacing_two_len * " "
-    space_three = spacing_three_len * " "
-
-
-    # 10. Print the item name, price, and quantity
-    print(f"{current_item}{space_one}| ${current_price}{space_two}| {current_quantity}{space_three}")
+            # 10. Print the item name, price, and quantity
+            print(f"{current_item}{space_one}| ${current_price}{space_two}|{space_three}{current_quantity}")
 
 
 # 11. Calculate the cost of the order using list comprehension
