@@ -137,7 +137,6 @@ while place_order:
                     # Ask the customer for the quantity of the menu item
                     quantity = input("How many would you like to purchase? ")
 
-
                     # Check if the quantity is a number, default to 1 if not
                     quantity = 1 if not quantity.isdigit() else int(quantity)
 
@@ -146,6 +145,7 @@ while place_order:
                     order_keys = list({key for dictionary in order for key in dictionary})
 
                     if item_name in order_keys:
+                        # if item_name is in order_keys, we pull the index of the item to add to the quantity
                         index = next((i for i, order_dict in enumerate(order) if item_name in order_dict), None)
                         order[index][item_name]["Quantity"] += quantity
                     else:
@@ -242,17 +242,15 @@ for item in order:
 
 
 # 11. Calculate the cost of the order using list comprehension
-print("--" * 50)
-print("--" * 50)
-print("--" * 50)
+print("-" * 50)
 prices = []
 for item in order:
     for key, val in item.items():
 # Multiply the price by quantity for each item in the order list, then sum()
-        price = val['Price'] * val['Quantity']
-        # print(f"{key} Total: {price}")
-        prices.append(val['Price'] * val['Quantity'])
+        price = (val['Price'] * val['Quantity'])
+        # print(f"{key} Total: {price:.2}")
+        prices.append(price)
 
 # and print the prices.
 print(prices)
-print(f"Order Total: {sum(prices)}")
+print(f"Order Total: {sum(prices):.2f}")
