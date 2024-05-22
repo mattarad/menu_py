@@ -148,21 +148,24 @@ while place_order:
 
                     # Add the item name, price, and quantity to the order list
                     if len(customer_order) > 0: # checks if customer order has one or more items
+                        contains_key = False 
                         for items in customer_order: # if it has one or more items, it takes items
-                            if not item_name in items: # checks if current item is in the items
-                                customer_order.append({item_name:{ # if item hasn't been added, it appends item to customer_order
-                                    "Price": menu_items[item_number]["Price"],
-                                    "Quantity": quantity
-                                }})
-                            else: # the item has already been added, so it only adds the quantity to the item amount
-                                items[item_name]["Quantity"] += quantity
+                            print(items)
+                            if item_name in items:
+                                contains_key = True
+                        if not contains_key:
+                            customer_order.append({item_name:{ # if item hasn't been added, it appends item to customer_order
+                                "Price": menu_items[item_number]["Price"],
+                                "Quantity": quantity
+                            }})
+                        else:
+                            items[item_name]["Quantity"] += quantity
                     else:
                         customer_order.append({item_name:{
                             # "Item name": item_name,
                             "Price": menu_items[item_number]["Price"],
                             "Quantity": quantity
                         }})
-
             # Tell the customer that their input isn't valid
             else:
                 print("Invalid input")
@@ -229,11 +232,6 @@ for item in customer_order:
     if type(item) is dict:
 
         for key, value in item.items():
-            # print(key)
-            # print(value)
-            # print(value["Price"])
-            # print(value["Quantity"])
-
         # 7. Store the dictionary items as variables
             current_item = key
             current_price = value["Price"]
@@ -255,5 +253,17 @@ for item in customer_order:
 
 
 # 11. Calculate the cost of the order using list comprehension
+print("--" * 50)
+print("--" * 50)
+print("--" * 50)
+prices = []
+for items in customer_order:
+    for key, val in items.items():
 # Multiply the price by quantity for each item in the order list, then sum()
+        price = val['Price'] * val['Quantity']
+        print(f"{key} Total: {price}")
+        prices.append(val['Price'] * val['Quantity'])
+
 # and print the prices.
+print(prices)
+print(f"Order Total: {sum(prices)}")
