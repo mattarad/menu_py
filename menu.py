@@ -147,28 +147,26 @@ while place_order:
                     print("-"*25)
 
                     # Add the item name, price, and quantity to the order list
-                    for items in customer_order:
-                        print("items")
-                        print("items")
-                        print("items")
-                        print("items")
-                        print("items")
-                        print("items")
+                    print("len(customer_order)")
+                    print(len(customer_order))
+                    if len(customer_order) > 0:
+                        for items in customer_order:
+                            print(items)
+                            if not item_name in items:
+                                customer_order.append({item_name:{
+                                    "Price": menu_items[item_number]["Price"],
+                                    "Quantity": quantity
+                                }})
+                            else:
+                                items[item_name]["Quantity"] += quantity
+                    else:
+                        customer_order.append({item_name:{
+                            # "Item name": item_name,
+                            "Price": menu_items[item_number]["Price"],
+                            "Quantity": quantity
+                        }})
 
-                        if item_name in items:
-                            print("CONTAINS")
-                            print("CONTAINS")
-                            print("CONTAINS")
-                            print("CONTAINS")
-                            print("CONTAINS")
-                    customer_order.append({item_name:{
-                        # "Item name": item_name,
-                        "Price": menu_items[item_number]["Price"],
-                        "Quantity": quantity
-                    }})
-
-                    
-
+                    print("customer_order")
                     print(customer_order)
                     # Tell the customer that their input isn't valid
             else:
