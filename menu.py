@@ -119,20 +119,20 @@ while place_order:
                     }
                     i += 1
             # 2. Ask customer to input menu item number
-            item_number = input(f"Enter the Item Number you would like to purchase: (1 - {i - 1}) ")
+            menu_selection = input(f"Enter the Item Number you would like to purchase: (1 - {i - 1}) ")
 
 
             # 3. Check if the customer typed a number
-            if item_number.isdigit():
+            if menu_selection.isdigit():
 
                 # Convert the menu selection to an integer
-                item_number = int(item_number)
+                menu_selection = int(menu_selection)
 
                 # 4. Check if the menu selection is in the menu items
-                if item_number in menu_items.keys():
+                if menu_selection in menu_items.keys():
 
                     # Store the item name as a variable
-                    item_name = menu_items[item_number]["Item name"]
+                    item_name = menu_items[menu_selection]["Item name"]
 
                     # Ask the customer for the quantity of the menu item
                     quantity = input("How many would you like to purchase? ")
@@ -151,11 +151,9 @@ while place_order:
                     else: # if item hasn't been added, it appends item to customer_order
                         order.append({
                                 "Item name": item_name,
-                                "Price": menu_items[item_number]["Price"],
+                                "Price": menu_items[menu_selection]["Price"],
                                 "Quantity": quantity
                             })
-
-                    print(order)
             # Tell the customer that their input isn't valid
             else:
                 print("Invalid input")
@@ -220,8 +218,6 @@ split_three_len = len(split_three)
 for item in order:
     # print(item)
     if type(item) is dict:
-
-        # for key, value in item.items():
         # 7. Store the dictionary items as variables
         current_item = item["Item name"]
         current_price = item["Price"]
@@ -244,12 +240,8 @@ for item in order:
 
 # 11. Calculate the cost of the order using list comprehension
 print("-" * 50)
-prices = []
-for item in order:
-# Multiply the price by quantity for each item in the order list, then sum()
-    price = (item['Price'] * item['Quantity'])
-    prices.append(price)
+prices = [round(item['Price'] * item['Quantity'], 2) for item in order]
 
 # and print the prices.
 print(prices)
-print(f"Order Total: {sum(prices):.2f}")
+print(f"Order Total: {sum(prices):,.2f}")
